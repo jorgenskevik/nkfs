@@ -52,6 +52,30 @@
     <string name="policy">Policy</string>
     <string name="acceptTerms">Click the "I accept" box to use the app</string>
     <string name="checkBox">I accept</string>
+
+    <string name="label_phone_auth">Phone Number Authentication</string>
+    <string name="desc_phone_auth">Use a phone number to authenticate with Firebase.</string>
+    <string name="signed_in">Write phone number</string>
+    <string name="start_phone_auth">Start</string>
+    <string name="verify_phone_auth">Verify</string>
+    <string name="resend_phone_auth">Resend</string>
+    <string name="hint_phone_number">Phone Number</string>
+    <string name="hint_verification_code">Verification Code</string>
+    <string name="status_code_sent">Code Sent</string>
+    <string name="status_verification_failed">Verification failed</string>
+    <string name="status_verification_succeeded">Verification succeeded</string>
+    <string name="status_sign_in_failed">Sign-in failed</string>
+    <string name="instant_validation">(instant validation)</string>
+    <string name="phone_title_text">Phone Number</string>
+    <string name="sign_out">Sign out</string>
+
+
+    <string name="verification">verification successful</string>
+    <string name="landskode">Country Code:</string>
+
+
+
+
     <string name="kortfriNorge">www.kortfri.no</string>
     <string name="updatePicture">Could not update picture</string>
     <string name="pictureMessage">You have to type in a code to change your profile picture. Your teacher or system administrator will give you this code. IMPORTANT INFORMATION: You can only use this code once! After using the code, only the system administrator can alter your profile picture. This is because the app is used as identification. Remember that using the identity of another person is illegal. (for example: Use your friends app to get a lower priced buss ticket.)</string>

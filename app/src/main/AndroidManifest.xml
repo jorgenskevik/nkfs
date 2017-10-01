@@ -73,6 +73,12 @@
             android:name=".MissingPicturePopUp"
             android:screenOrientation="portrait"
             />
+
+        <activity
+            android:name=".Firebase"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 
 </manifest>

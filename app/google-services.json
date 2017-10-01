@@ -1,0 +1,144 @@
+{
+  "project_info": {
+    "project_number": "973471203209",
+    "firebase_url": "https://kortfri-norge-as.firebaseio.com",
+    "project_id": "kortfri-norge-as",
+    "storage_bucket": "kortfri-norge-as.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973471203209:android:11048291f23d7034",
+        "android_client_info": {
+          "package_name": "com.example.jorgenskevik.e_cardholder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "973471203209-pbrbefptf25l6s22e5ebmj0evnfn0sei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBm3pTdDXDw6c89RS_MTB3BUKXGAU0Mogs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973471203209:android:9be40a064402eedb",
+        "android_client_info": {
+          "package_name": "kortfri.norge.demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "973471203209-pbrbefptf25l6s22e5ebmj0evnfn0sei.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "973471203209-3m4o00jdr0h060joet0vie14gvrrkb0f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kortfri.norge.demo",
+            "certificate_hash": "68a126056c122b42f22235d0d07e80cc49f76682"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBm3pTdDXDw6c89RS_MTB3BUKXGAU0Mogs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "973471203209-pbrbefptf25l6s22e5ebmj0evnfn0sei.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "973471203209-jdvta89ktsbo75ihn16hca278oriavff.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kortfrinorge.kortfri-nrs"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973471203209:android:0d746261810f7893",
+        "android_client_info": {
+          "package_name": "com.kortfri.testfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "973471203209-50ntmcsdb5sequhg41bc8pi5f5ib1ehb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kortfri.testfirebase",
+            "certificate_hash": "68a126056c122b42f22235d0d07e80cc49f76682"
+          }
+        },
+        {
+          "client_id": "973471203209-pbrbefptf25l6s22e5ebmj0evnfn0sei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBm3pTdDXDw6c89RS_MTB3BUKXGAU0Mogs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "973471203209-pbrbefptf25l6s22e5ebmj0evnfn0sei.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "973471203209-jdvta89ktsbo75ihn16hca278oriavff.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kortfrinorge.kortfri-nrs"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
