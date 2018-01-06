@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4.2"
-        android:background="#cfd8dc"
+        android:background="@drawable/darkblue"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -36,9 +36,10 @@
             android:layout_marginRight="21dp"
             android:layout_toLeftOf="@+id/landcode"
             android:layout_toStartOf="@+id/landcode"
+            android:textStyle="bold"
             android:text="@string/landskode"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/dgts__text_dark" />
+            android:textColor="@color/tw__solid_white" />
 
         <EditText
             android:id="@+id/landcode"
@@ -48,6 +49,8 @@
             android:layout_alignRight="@+id/detail"
             android:layout_below="@+id/detail"
             android:layout_gravity="left"
+            android:textStyle="bold"
+            android:textColor="@color/tw__solid_white"
             android:gravity="left"
             android:maxLength="3"
             android:text="+47" />
@@ -92,7 +95,8 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1.8"
-        android:background="#bdbdbd"
+        android:alpha="0.9"
+        android:background="@drawable/darkblue"
         android:gravity="center_vertical">
 
         <LinearLayout

@@ -6,7 +6,10 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,10 +30,14 @@ import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
@@ -171,7 +178,6 @@ public class PictureActivity extends Activity {
         toast.show();
     }
 
-
     /**
      * Add picture button.
      *
@@ -223,6 +229,7 @@ public class PictureActivity extends Activity {
                             sessionManager.updatePicture(user.getPicture());
                             sessionManager.updatePath(mediaPath);
                             sessionManager.updatePictureToken("BRUKT");
+                            sessionManager.updateTurn(getCameraPhotoOrientation(mediaPath));
 
 
                             ContextWrapper cw = new ContextWrapper(getApplicationContext());
@@ -255,7 +262,7 @@ public class PictureActivity extends Activity {
                     }
                 });
             }catch (NullPointerException error){
-                startActivity(new Intent(PictureActivity.this, MissingPicturePopUp.class));
+                startActivity(new Intent(PictureActivity.this, UserActivity.class));
             }
 
         } else if (!fourDigits.trim().equals(codeString)) {
@@ -272,17 +279,49 @@ public class PictureActivity extends Activity {
      * @param url the url
      * @return the mime type
      */
-    public static String getMimeType(File url) {
+    public String getMimeType(File url) {
         String type = null;
-        String extension = MimeTypeMap.getFileExtensionFromUrl(String.valueOf(url));
+        String test = String.valueOf(url);
+        test = test.toLowerCase();
+        String extension = MimeTypeMap.getFileExtensionFromUrl(test);
         if (extension != null) {
-            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension.toLowerCase());
+        }if(type == null){
+            type = "image/*";
         }
         return type;
     }
 
+
+    public String getCameraPhotoOrientation(String imagePath) {
+        String rotate = "kortfri";
+        try {
+            File imageFile = new File(imagePath);
+            ExifInterface exif = new ExifInterface(imageFile.getAbsolutePath());
+            int orientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL);
+
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotate = "270";
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotate = "180";
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotate = "90";
+                    break;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rotate;
+    }
+
+    
     private Target picassoImageTarget(Context context, final String imageDir, final String imageName) {
-        Log.d("picassoImageTarget", " picassoImageTarget");
         ContextWrapper cw = new ContextWrapper(context);
         final File directory = cw.getDir(imageDir, Context.MODE_PRIVATE); // path to /data/data/yourapp/app_imageDir
         return new Target() {
@@ -294,8 +333,10 @@ public class PictureActivity extends Activity {
                         final File myImageFile = new File(directory, imageName); // Create image file
                         FileOutputStream fos = null;
                         try {
+                            //Bitmap bmRotated = rotateBitmap(bitmap, Integer.parseInt(getCameraPhotoOrientation(path123)));
                             fos = new FileOutputStream(myImageFile);
                             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                            //bmRotated.compress(Bitmap.CompressFormat.PNG, 100, fos);
                         } catch (IOException e) {
                             e.printStackTrace();
                         } finally {
@@ -305,8 +346,6 @@ public class PictureActivity extends Activity {
                                 e.printStackTrace();
                             }
                         }
-                        Log.i("image", "image saved to >>>" + myImageFile.getAbsolutePath());
-
                     }
                 }).start();
             }

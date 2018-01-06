@@ -149,7 +149,8 @@
         android:layout_width="40dp"
         android:layout_height="30dp"
         android:onClick="openBarCode"
-        android:src="@drawable/strekkode"
+        android:src="@drawable/newbarcode"
+        android:background="@color/tw__transparent"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -159,16 +160,16 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:onClick="openSettings"
-        android:src="@drawable/set"
+        android:background="@color/tw__transparent"
+        android:src="@drawable/newsettings"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginStart="1dp"/>
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/button11"

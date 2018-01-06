@@ -105,9 +105,6 @@ public class LoginActivity extends AppCompatActivity  implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.firebaseauth);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
 
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
@@ -116,24 +113,6 @@ public class LoginActivity extends AppCompatActivity  implements
         JodaTimeAndroid.init(this);
         sessionManager = new SessionManager(getApplicationContext());
         HashMap<String, String> user = sessionManager.getUserDetails();
-
-        // name
-        String name = user.get(SessionManager.KEY_NAME);
-
-        // id
-        String id = user.get(SessionManager.KEY_ID);
-
-        // email
-        String email = user.get(SessionManager.KEY_EMAIL);
-
-        //token
-        String token = user.get(SessionManager.KEY_TOKEN);
-
-        //check
-        String check = user.get(SessionManager.KEY_CHECK);
-
-        if(name == null || id == null || email == null || token == null ){
-
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -237,16 +216,6 @@ public class LoginActivity extends AppCompatActivity  implements
             }
         };
 
-    } else if(check == null) {
-        Intent intent = new Intent(LoginActivity.this, TermsActivity.class);
-        startActivity(intent);
-
-    }
-        else{
-        Intent intent = new Intent(LoginActivity.this, UserActivity.class);
-        startActivity(intent);
-    }
-        // [END phone_auth_callbacks]
     }
 
     // [START on_start_check_user]

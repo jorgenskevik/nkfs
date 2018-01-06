@@ -60,6 +60,8 @@
     <string name="verification">Innlogging vellykket</string>
     <string name="landskode">Landskode:</string>
 
+    <string name="login">Logg inn</string>
+    <string name="infomasjon">Kontaktinformasjon</string>
 
     <string name="label_phone_auth">Phone Number Authentication</string>
     <string name="desc_phone_auth">Use a phone number to authenticate with Firebase.</string>

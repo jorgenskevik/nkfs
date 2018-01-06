@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 
 import static android.R.id.message;
 
@@ -18,6 +19,11 @@ public class ContactUsActivity extends Activity {
      */
 //public static final String phoneNumber = "tel:72894940";
     public static final String phoneNumber = "tel:76066360";
+    public static final String emailNumber = "Trondheim@akademiet.no";
+    private static final int WHITE = 0xFFFFFFFF;
+
+    Button phone;
+    Button email;
 
     /**
      * The constant web.
@@ -31,6 +37,16 @@ public class ContactUsActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.contact_us_view);
+
+        phone = (Button) findViewById(R.id.editText);
+        email = (Button) findViewById(R.id.editText2);
+        emailNumber.toLowerCase();
+        phone.setText(phoneNumber);
+        phone.setHintTextColor(WHITE);
+        phone.setTextColor(WHITE);
+        email.setText(emailNumber);
+        email.setHintTextColor(WHITE);
+        email.setTextColor(WHITE);
     }
 
     /**
@@ -67,3 +83,4 @@ public class ContactUsActivity extends Activity {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(web)));
     }
 }
+

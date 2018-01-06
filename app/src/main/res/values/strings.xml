@@ -73,8 +73,8 @@
     <string name="verification">verification successful</string>
     <string name="landskode">Country Code:</string>
 
-
-
+    <string name="login">Login</string>
+    <string name="infomasjon">Contact Information</string>
 
     <string name="kortfriNorge">www.kortfri.no</string>
     <string name="updatePicture">Could not update picture</string>

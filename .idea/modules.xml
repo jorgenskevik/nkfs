@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/firebaseskole.iml" filepath="$PROJECT_DIR$/firebaseskole.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nkfs.iml" filepath="$PROJECT_DIR$/nkfs.iml" />
     </modules>
   </component>
 </project>
