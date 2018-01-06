@@ -320,7 +320,7 @@ public class PictureActivity extends Activity {
         return rotate;
     }
 
-    
+
     private Target picassoImageTarget(Context context, final String imageDir, final String imageName) {
         ContextWrapper cw = new ContextWrapper(context);
         final File directory = cw.getDir(imageDir, Context.MODE_PRIVATE); // path to /data/data/yourapp/app_imageDir

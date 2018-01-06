@@ -19,7 +19,7 @@ public class ContactUsActivity extends Activity {
      */
 //public static final String phoneNumber = "tel:72894940";
     public static final String phoneNumber = "tel:76066360";
-    public static final String emailNumber = "Trondheim@akademiet.no";
+    public static final String emailNumber = "kfilm-post@vgs.nfk.no";
     private static final int WHITE = 0xFFFFFFFF;
 
     Button phone;
