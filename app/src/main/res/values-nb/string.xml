@@ -9,7 +9,7 @@
     <string name="Callus">Ring oss:</string>
     <string name="Terms">Vilkår</string>
     <string name="Picture">Bilde</string>
-    <string name="termsdescription1">Appen vil vise informasjon om navn, studiested og gyldigheten til det digitale studentbeviset. Appen vil også vise bilde av deg - som du selv velger. Appen fungerer som studentbevis, og kan benyttes som legitimasjon hos selskaper som har avtale med ditt studiested om honnør-billetter. Ved førstegangs bruk må appen være tilkoblet internett for å kunne last ned informasjonen som finnes om deg. Denne blir lagret lokalt og du trenger derfor ikke være på nett for å bruke appen senere. KortFri tar ikke ansvar for bøter, misbruk og lignende.</string>
+    <string name="termsdescription1">Appen vil vise informasjon om navn, studiested og gyldigheten til det digitale studentbeviset. Appen vil også vise bilde av deg - som du selv velger. Appen fungerer som studentbevis, og kan benyttes som legitimasjon hos selskaper som har avtale med ditt studiested om honnør-billetter. Ved førstegangs bruk må appen være tilkoblet internett for å kunne last ned informasjonen som finnes om deg. Denne blir lagret lokalt og du trenger derfor ikke være på nett for å bruke appen senere. KortFri tar ikke ansvar for bøter, misbruk og lignende. Kortet vil være gyldig et semester av gangen før det må oppdateres, vårsemestret strekker seg fra 01.01 til 31.08 og høstsemestret fra 01.09 til 31.12.</string>
     <string name="termsdescription2">Er du over 15 år og godtar våre vilkår?</string>
     <string name="termsdescription3">Kortet vil være gyldig et semester av gangen før det må oppdateres, vårsemestret strekker seg fra 01.01 til 31.08 og høstsemestret fra 01.09 til 31.12.</string>
     <string name="barcode">Barkode</string>
@@ -23,7 +23,7 @@
     <string name="GiveAccess">"Gi appen tilgang: settings/apps/KortFri/Storage"</string>
     <string name="setPicture">Sett bilde</string>
     <string name="updateProfile">Oppdater</string>
-    <string name="DenyPicture">Du har allerede valgt et bilde</string>
+    <string name="DenyPicture">Du har allerede valgt bilde</string>
     <string name="userUpdated">Bruker Oppdatert</string>
     <string name="signInDigiFail">Innlogging failet</string>
     <string name="userNotUpdated">Kunne ikke oppdatere bruker</string>
@@ -63,17 +63,23 @@
     <string name="login">Logg inn</string>
     <string name="infomasjon">Kontaktinformasjon</string>
 
+    <string name="Cancel">Avbryt</string>
+    <string name="Yes">Ja</string>
+    <string name="Skrivinn">Fyll inn mobilnummer</string>
+    <string name="nonet">Koble til Wifi</string>
+
+
     <string name="label_phone_auth">Phone Number Authentication</string>
     <string name="desc_phone_auth">Use a phone number to authenticate with Firebase.</string>
     <string name="signed_in">Write phone number</string>
-    <string name="start_phone_auth">Start</string>
-    <string name="verify_phone_auth">Verifiser</string>
+    <string name="start_phone_auth">Send kode</string>
+    <string name="verify_phone_auth">Logg inn</string>
     <string name="resend_phone_auth">Send på ny</string>
     <string name="hint_phone_number">Mobilnummer</string>
-    <string name="hint_verification_code">Verifiserings Kode</string>
-    <string name="status_code_sent">Code Sent</string>
-    <string name="status_verification_failed">Verification failed</string>
-    <string name="status_verification_succeeded">Verification succeeded</string>
+    <string name="hint_verification_code">Verifiseringskode</string>
+    <string name="status_code_sent">Kode Sendt</string>
+    <string name="status_verification_failed">Verifisering feilet</string>
+    <string name="status_verification_succeeded">Verifisert</string>
     <string name="status_sign_in_failed">Sign-in failed</string>
     <string name="instant_validation">(instant validation)</string>
     <string name="phone_title_text">Phone Number</string>

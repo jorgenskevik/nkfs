@@ -3,6 +3,8 @@ package com.example.jorgenskevik.e_cardholders;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -41,6 +43,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hbb20.CountryCodePicker;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -48,6 +51,9 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -89,7 +95,7 @@ public class LoginActivity extends AppCompatActivity  implements
 
     private EditText mPhoneNumberField;
     private EditText mVerificationField;
-    private EditText landskode;
+    private CountryCodePicker landskode;
 
 
     private Button mStartButton;
@@ -104,7 +110,10 @@ public class LoginActivity extends AppCompatActivity  implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.firebaseauth);
+        setContentView(R.layout.login_view);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+
 
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
@@ -125,7 +134,7 @@ public class LoginActivity extends AppCompatActivity  implements
 
         mPhoneNumberField = (EditText) findViewById(R.id.field_phone_number);
         mVerificationField = (EditText) findViewById(R.id.field_verification_code);
-            landskode = (EditText) findViewById(R.id.landcode);
+        landskode = (CountryCodePicker) findViewById(R.id.picker);
 
         mStartButton = (Button) findViewById(R.id.button_start_verification);
         mVerifyButton = (Button) findViewById(R.id.button_verify_phone);
@@ -141,6 +150,24 @@ public class LoginActivity extends AppCompatActivity  implements
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
+
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try  {
+                    int selectedColor = Color.rgb(254, 0, 0);
+                    if(!hasActiveInternetConnection()){
+                        mDetailText.setText(R.string.nonet);
+                        mDetailText.setTextColor(selectedColor);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();
 
         // [END initialize_auth]
 
@@ -228,7 +255,8 @@ public class LoginActivity extends AppCompatActivity  implements
 
         // [START_EXCLUDE]
         if (mVerificationInProgress && validatePhoneNumber()) {
-            startPhoneNumberVerification(mPhoneNumberField.getText().toString());
+            landskode.registerCarrierNumberEditText(mPhoneNumberField);
+            startPhoneNumberVerification(landskode.getFullNumberWithPlus());
         }
         // [END_EXCLUDE]
     }
@@ -250,7 +278,7 @@ public class LoginActivity extends AppCompatActivity  implements
     private void startPhoneNumberVerification(String phoneNumber) {
         // [START start_phone_auth]
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                landskode.getText().toString() + phoneNumber,        // Phone number to verify
+                phoneNumber,        // Phone number to verify
                 60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
@@ -271,13 +299,17 @@ public class LoginActivity extends AppCompatActivity  implements
     // [START resend_verification]
     private void resendVerificationCode(String phoneNumber,
                                         PhoneAuthProvider.ForceResendingToken token) {
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                landskode.getText().toString() + phoneNumber,        // Phone number to verify
-                60,                 // Timeout duration
-                TimeUnit.SECONDS,   // Unit of timeout
-                this,               // Activity (for callback binding)
-                mCallbacks,         // OnVerificationStateChangedCallbacks
-                token);             // ForceResendingToken from callbacks
+        if(!phoneNumber.equals("")) {
+            PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                    phoneNumber,        // Phone number to verify
+                    60,                 // Timeout duration
+                    TimeUnit.SECONDS,   // Unit of timeout
+                    this,               // Activity (for callback binding)
+                    mCallbacks,         // OnVerificationStateChangedCallbacks
+                    token);             // ForceResendingToken from callbacks
+        }else{
+            Toast.makeText(this, R.string.Skrivinn, Toast.LENGTH_LONG).show();
+        }
     }
     // [END resend_verification]
 
@@ -289,15 +321,12 @@ public class LoginActivity extends AppCompatActivity  implements
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-
                             FirebaseUser user = task.getResult().getUser();
                             // [START_EXCLUDE]
                             updateUI(STATE_SIGNIN_SUCCESS, user);
                             // [END_EXCLUDE]
                         } else {
                             // Sign in failed, display a message and update the UI
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
                                 // [START_EXCLUDE silent]
@@ -330,6 +359,28 @@ public class LoginActivity extends AppCompatActivity  implements
             updateUI(STATE_INITIALIZED);
         }
     }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
+    public boolean hasActiveInternetConnection() {
+        if (isNetworkAvailable()) {
+            try {
+                HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
+                urlc.setRequestProperty("User-Agent", "Test");
+                urlc.setRequestProperty("Connection", "close");
+                urlc.setConnectTimeout(1500);
+                urlc.connect();
+                return (urlc.getResponseCode() == 200);
+            } catch (IOException e) {
+            }
+        } else {
+        }
+        return false;
+    }
 
     private void updateUI(int uiState, FirebaseUser user) {
         updateUI(uiState, user, null);
@@ -342,15 +393,12 @@ public class LoginActivity extends AppCompatActivity  implements
     private void updateUI(int uiState, FirebaseUser user, PhoneAuthCredential cred) {
         switch (uiState) {
             case STATE_INITIALIZED:
-                System.out.println("1");
                 // Initialized state, show only the phone number field and start button
                 enableViews(mStartButton, mPhoneNumberField);
                 disableViews(mVerifyButton, mResendButton, mVerificationField);
                 mDetailText.setText(null);
                 break;
             case STATE_CODE_SENT:
-                System.out.println("2");
-
                 // Code sent state, show the verification field, the
                 enableViews(mVerifyButton, mResendButton, mPhoneNumberField, mVerificationField);
                 disableViews(mStartButton);
@@ -358,9 +406,6 @@ public class LoginActivity extends AppCompatActivity  implements
                 mDetailText.setTextColor(Color.parseColor("#43a047"));
                 break;
             case STATE_VERIFY_FAILED:
-                System.out.println(landskode);
-                System.out.println("3");
-
                 // Verification has failed, show all options
                 enableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,
                         mVerificationField);
@@ -369,8 +414,6 @@ public class LoginActivity extends AppCompatActivity  implements
                 progressBar.setVisibility(View.INVISIBLE);
                 break;
             case STATE_VERIFY_SUCCESS:
-                System.out.println("4");
-
                 // Verification has succeeded, proceed to firebase sign in
                 disableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,
                         mVerificationField);
@@ -380,15 +423,10 @@ public class LoginActivity extends AppCompatActivity  implements
 
                 // Set the verification text based on the credential
                 if (cred != null) {
-                    System.out.println("5");
 
                     if (cred.getSmsCode() != null) {
-                        System.out.println("6");
-
                         mVerificationField.setText(cred.getSmsCode());
                     } else {
-                        System.out.println("7");
-
                         mVerificationField.setText(R.string.instant_validation);
                         mVerificationField.setTextColor(Color.parseColor("#4bacb8"));
                     }
@@ -396,7 +434,6 @@ public class LoginActivity extends AppCompatActivity  implements
 
                 break;
             case STATE_SIGNIN_FAILED:
-                System.out.println("8");
 
                 // No-op, handled by sign-in check
                 mDetailText.setText(R.string.status_sign_in_failed);
@@ -404,7 +441,6 @@ public class LoginActivity extends AppCompatActivity  implements
                 progressBar.setVisibility(View.INVISIBLE);
                 break;
             case STATE_SIGNIN_SUCCESS:
-                System.out.println("9");
 
                 // Np-op, handled by sign-in check
                 mStatusText.setText(R.string.signed_in);
@@ -418,7 +454,6 @@ public class LoginActivity extends AppCompatActivity  implements
 
             mStatusText.setText(R.string.sign_out);;
         } else {
-            System.out.println("AUTORISERT!");
 
             // Signed in
             mPhoneNumberViews.setVisibility(View.GONE);
@@ -457,9 +492,7 @@ public class LoginActivity extends AppCompatActivity  implements
                                         .build();
 
                                 UserAPI userapi = retrofit.create(UserAPI.class);
-                                System.out.println("token: " + authHeader.get("firebase-token") + "key: " + authHeader.get("client_key") +
-                                        "phone: " + authHeader.get("phoneNumber")
-                                        + "Version: " + authHeader.get("Accept-Version"));
+
                                 userapi.userLogin(
                                         authHeader.get("phoneNumber"),
                                         authHeader.get("firebase-token"),
@@ -467,9 +500,7 @@ public class LoginActivity extends AppCompatActivity  implements
                                         authHeader.get("Accept-Version")).enqueue(new Callback<LoginModel>() {
                                     @Override
                                     public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
-                                        System.out.println("dette gikk jo helt knall");
                                         if (response.isSuccessful()) {
-                                            System.out.println("også her?");
                                             LoginModel LoginList = response.body();
 
                                             sessionManager = new SessionManager(getApplicationContext());
@@ -503,7 +534,6 @@ public class LoginActivity extends AppCompatActivity  implements
                                             sessionManager.createLoginSession(usernameString,emailString, tokenString, studentNumber, id, role, pictureToken, expirationString, birthDateString, picture);
 
                                             if (role.equals("admin")) {
-                                                System.out.println("gikk inn i admin");
                                                 Context context = getApplicationContext();
                                                 int duration = Toast.LENGTH_LONG;
                                                 Toast toast = Toast.makeText(context, R.string.youareadmin, duration);
@@ -511,7 +541,6 @@ public class LoginActivity extends AppCompatActivity  implements
 
 
                                             } else if (emailString.trim().equals("") || id.trim().equals("") || usernameString.trim().equals("") || role.trim().equals("") || pictureToken.trim().equals("")) {
-                                                System.out.println("noe mangler");
                                                 Context context = getApplicationContext();
                                                 int duration = Toast.LENGTH_SHORT;
                                                 Toast toast = Toast.makeText(context, R.string.contactIT, duration);
@@ -520,14 +549,11 @@ public class LoginActivity extends AppCompatActivity  implements
                                                 startActivity(intent);
 
                                             } else {
-                                                System.out.println("alt var konge");
-                                                Intent intent = new Intent(LoginActivity.this, TermsActivity.class);
+                                                Intent intent = new Intent(LoginActivity.this, UserActivity.class);
                                                 startActivity(intent);
 
                                             }
                                         } else {
-                                            System.out.println("noe gikk feil");
-                                            System.out.println(call + " dette er call");
                                             Context context = getApplicationContext();
                                             CharSequence text = response.message();
                                             int duration = Toast.LENGTH_SHORT;
@@ -539,7 +565,6 @@ public class LoginActivity extends AppCompatActivity  implements
 
                                     @Override
                                     public void onFailure(Call<LoginModel> call, Throwable t) {
-                                        System.out.println("this was shit............................................");
                                         Context context = getApplicationContext();
                                         CharSequence text = t.getMessage();
                                         int duration = Toast.LENGTH_SHORT;
@@ -551,7 +576,6 @@ public class LoginActivity extends AppCompatActivity  implements
                                 // ...
                             } else {
                                 // Handle error -> task.getException();
-                                System.out.println("12456787223456765432");
                             }
                         }
                     });

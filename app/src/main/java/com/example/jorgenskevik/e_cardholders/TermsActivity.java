@@ -8,8 +8,11 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Toast;
@@ -48,69 +51,79 @@ public class TermsActivity extends Activity {
         setContentView(R.layout.terms_view);
         sessionManager = new SessionManager(getApplicationContext());
 
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        final CheckBox yourCheckBox = (CheckBox) findViewById(R.id.checkBox);
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
 
-        yourCheckBox.setOnClickListener(new View.OnClickListener() {
+        getWindow().setLayout((int)(width*.9), (int)(height*.8));
+
+        Button cancelbutton = (Button) findViewById(R.id.cancelbutton);
+
+        cancelbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(yourCheckBox.isChecked()){
-                    checkBox = "check";
-                    sessionManager.updateCheck(checkBox);
-                }else{
-                    checkBox = "notCheck";
-                }
+                Intent intent = new Intent(TermsActivity.this, LandingPage.class);
+                startActivity(intent);
             }
         });
     }
 
     @Override
-    public void onBackPressed() {
-        moveTaskToBack(true);
-        Toast.makeText(this, R.string.acceptTerms, Toast.LENGTH_SHORT).show();
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case CAM_REQUEST_CODE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    Intent intent = new Intent(TermsActivity.this, LoginActivity.class);
+                    startActivity(intent);
 
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(this, R.string.GiveAccess, Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
     }
-
-    /**
-     * Open card.
-     *
-     * @param view the view
-     */
-
-
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void openCard(View view) {
         String buildVersion = Build.VERSION.RELEASE;
         String firstLetter = String.valueOf(buildVersion.charAt(0));
         int number = Integer.parseInt(firstLetter);
         if(number < maxBuildVersion){
-            //Digits.logout();
-            if (checkBox.equals("check")){
-                Intent intent = new Intent(TermsActivity.this, UserActivity.class);
-                startActivity(intent);
-                return;
-            }else{
-                Toast.makeText(this, R.string.acceptTerms, Toast.LENGTH_SHORT).show();
-            }
-
+            Intent intent = new Intent(TermsActivity.this, LoginActivity.class);
+            startActivity(intent);
+            return;
         }
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(TermsActivity.this, UserActivity.class);
-            if(checkBox.equals("check")){
-                startActivity(intent);
-            }else{
-                Toast.makeText(this, R.string.acceptTerms, Toast.LENGTH_SHORT).show();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, CAM_REQUEST_CODE);
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, CAM_REQUEST_CODE);
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
             }
-        }else{
-            if(number < maxBuildVersion){
-
-            }else{
-                String[] permissionRequest = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                ActivityCompat.requestPermissions(this, permissionRequest, CAM_REQUEST_CODE);
-                Toast.makeText(this, R.string.GiveAccess, Toast.LENGTH_SHORT).show();
-            }
-
-
+        } else {
+            // Permission has already been granted
+            Intent intent = new Intent(TermsActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 }

@@ -8,7 +8,7 @@
     <string name="Callus">Call Us:</string>
     <string name="Terms">Terms</string>
     <string name="Picture">Picture</string>
-    <string name="termsdescription1">This app will display your name, place of study and the validity of your digital student card. The app will display a photo of you if you choose to select one. The app will function as a student card and can be used as identification for services your place of study has an agreement with. First time usage requires you to be connected to WiFi or a cellular connection to download the information required to display the student card. This information will be stored locally on the app. KortFri does not take any responsibility for tickets, abuse or any usage that violates Norwegian or international laws. The photos uploaded on this app will be deleted from our database once you as a user are deleted from our systems. Users with admin-rights to the KortFri system have the possibility to delete users. Usually this will be the IT-responsible at your place of study.</string>
+    <string name="termsdescription1">This app will display your name, place of study and the validity of your digital student card. The app will display a photo of you if you choose to select one. The app will function as a student card and can be used as identification for services your place of study has an agreement with. First time usage requires you to be connected to WiFi or a cellular connection to download the information required to display the student card. This information will be stored locally on the app. KortFri does not take any responsibility for tickets, abuse or any usage that violates Norwegian or international laws. The photos uploaded on this app will be deleted from our database once you as a user are deleted from our systems. Users with admin-rights to the KortFri system have the possibility to delete users. Usually this will be the IT-responsible at your place of study. The card will be valid for one semester at a time before it has to get updated, the spring semester reaches from 01.01 to 31.08 and the fall semester from 01.09 to 31.12.</string>
     <string name="termsdescription2">Are you 15 or older, and do you accept our terms of use?</string>
     <string name="termsdescription3">The card will be valid for one semester at a time before it has to get updated, the spring semester reaches from 01.01 to 31.08 and the fall semester from 01.09 to 31.12.</string>
     <string name="title_activity_main4">Main4Activity</string>
@@ -56,8 +56,8 @@
     <string name="label_phone_auth">Phone Number Authentication</string>
     <string name="desc_phone_auth">Use a phone number to authenticate with Firebase.</string>
     <string name="signed_in">Write phone number</string>
-    <string name="start_phone_auth">Start</string>
-    <string name="verify_phone_auth">Verify</string>
+    <string name="start_phone_auth">Send code</string>
+    <string name="verify_phone_auth">Log in</string>
     <string name="resend_phone_auth">Resend</string>
     <string name="hint_phone_number">Phone Number</string>
     <string name="hint_verification_code">Verification Code</string>
@@ -75,6 +75,11 @@
 
     <string name="login">Login</string>
     <string name="infomasjon">Contact Information</string>
+    <string name="nonet">Connect to Wifi</string>
+    <string name="Yes">Yes</string>
+    <string name="Skrivinn">Write in phone number</string>
+
+    <string name="Cancel">Cancel</string>
 
     <string name="kortfriNorge">www.kortfri.no</string>
     <string name="updatePicture">Could not update picture</string>

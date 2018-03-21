@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/darkblue"
     android:layout_height="match_parent"
+    android:alpha="0.9"
     tools:context="com.example.jorgenskevik.e_cardholders.PictureActivity">
 
     <ImageView

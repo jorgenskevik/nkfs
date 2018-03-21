@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
 public class KVTVariables {
 
     private static String Local_URL = "http://10.0.2.2:9000/";
-    private static String AcceptVersion = "V2";
+    private static String AcceptVersion = "V3";
     private static String Appkey = "8ba1b10b0c28f4e1c1e5d19325c153a2";
     private static String BASE_URL = "https://apinkfs.kortfri.no/";
 
